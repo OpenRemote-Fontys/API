@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "tiuIM2wxWrcutOkMd7yM7tWNZaPWTemAWtfOXcORt1cdoOAF6SWYpem06oC3TAMQhoVRZ5kFgvSj7aaGnHpLJA==",
+  "dgSpecHash": "o9aOxQmvrk+GeGZ74W+Aa1ROeg3FtIfa38LBgDxx89aNMZ7z5PbYOWA8EawkD3D8DKpHYyNkhZQQERLmr2tapg==",
   "success": true,
-  "projectFilePath": "/home/maya/RiderProjects/OpenRemoteAPI/OpenRemoteAPI/OpenRemoteAPI.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/maya/Projects/API/OpenRemoteAPI/OpenRemoteAPI.csproj",
+  "expectedPackageFiles": [
+    "/home/maya/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/home/maya/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/home/maya/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/home/maya/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
   "logs": []
 }
