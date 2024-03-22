@@ -414,3 +414,10 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudiocode
 
+OpenRemoteAPI/obj/OpenRemoteAPI.csproj.nuget.dgspec.json
+OpenRemoteAPI/obj/OpenRemoteAPI.csproj.nuget.g.props
+OpenRemoteAPI/obj/project.assets.json
+OpenRemoteAPI/obj/project.nuget.cache
+OpenRemoteAPI/obj/Debug/net8.0/OpenRemoteAPI.AssemblyInfo.cs
+OpenRemoteAPI/obj/Debug/net8.0/OpenRemoteAPI.AssemblyInfoInputs.cache
+OpenRemoteAPI/obj/Debug/net8.0/OpenRemoteAPI.assets.cache
