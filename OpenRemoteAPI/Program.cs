@@ -17,6 +17,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseWebSockets();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
