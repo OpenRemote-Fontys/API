@@ -35,7 +35,7 @@ public class SensorController
             Name = "Example Sensor 1",
             RoomId = 1,
             Value = 0.5324234f,
-            SensorData = SensorData.Crowdedness,
+            SensorData = "Crowdedness",
             Latitude = 51.4423907f,
             Longitude = 5.4669287f,
         };
@@ -45,7 +45,7 @@ public class SensorController
             Name = "Example Sensor 2",
             RoomId = 2,
             Value = 0.2345262f,
-            SensorData = SensorData.Loudness,
+            SensorData = "Loudness",
             Latitude = 51.4223907f,
             Longitude = 5.4569287f,
         };
