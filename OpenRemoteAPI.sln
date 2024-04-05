@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenRemoteAPI", "OpenRemoteAPI.csproj", "{BE2886A3-C4D1-458B-90DD-59A5A7621092}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE2886A3-C4D1-458B-90DD-59A5A7621092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE2886A3-C4D1-458B-90DD-59A5A7621092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE2886A3-C4D1-458B-90DD-59A5A7621092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE2886A3-C4D1-458B-90DD-59A5A7621092}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B70B475-43CF-4D47-825C-27FE7E865510}
+	EndGlobalSection
+EndGlobal
