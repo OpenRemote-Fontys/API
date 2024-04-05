@@ -1,10 +1,9 @@
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using OpenRemoteAPI.Models;
 
 namespace OpenRemoteAPI.Controllers;
 
-[Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class MapController
 {
@@ -15,7 +14,7 @@ public class MapController
     }
 
     [HttpGet]
-    [Microsoft.AspNetCore.Mvc.Route("/Map")]
+    [Route("/Map")]
     public Map GetMap()
     {
         Map map = new();
@@ -28,7 +27,7 @@ public class MapController
     }
 
     [HttpGet]
-    [Microsoft.AspNetCore.Mvc.Route("/Map/Test")]
+    [Route("/Map/Test")]
     public Map GetDummyMap()
     {
         Room exampleRoom1 = new Room{
