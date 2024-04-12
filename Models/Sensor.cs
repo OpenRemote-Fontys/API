@@ -7,6 +7,5 @@ public class Sensor
     public int RoomId { get; set; }
     public float Value { get; set; }
     public string SensorData { get; set; } = "";
-    public float Longitude { get; set; }
-    public float Latitude { get; set; }
+    public float[]? Coordinates { get; set; }
 }

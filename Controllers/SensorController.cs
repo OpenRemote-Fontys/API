@@ -36,8 +36,7 @@ public class SensorController
             RoomId = 1,
             Value = 0.5324234f,
             SensorData = "Crowdedness",
-            Latitude = 51.4423907f,
-            Longitude = 5.4669287f,
+            Coordinates = [51.4423907f, 5.4669287f]
         };
 
         Sensor exampleSensor2 = new Sensor{
@@ -46,8 +45,7 @@ public class SensorController
             RoomId = 2,
             Value = 0.2345262f,
             SensorData = "Loudness",
-            Latitude = 51.4223907f,
-            Longitude = 5.4569287f,
+            Coordinates = [51.4223907f, 5.4669287f],
         };
 
         List<Sensor> sensors = new();

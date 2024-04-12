@@ -17,11 +17,11 @@ public class MapController
     [Route("/Map")]
     public Map GetMap()
     {
-        Map map = new();
-
-
-
-
+        Map map = new Map{
+            MapUrl = "https://file.io/DFRxyLFmAGc80",
+            TopLeftBounds = [51.450472f, 5.452806f],
+            TopRightBounds = [51.451806f, 5.453639f]
+        };
 
         return map;
     }
@@ -33,16 +33,14 @@ public class MapController
         Room exampleRoom1 = new Room{
             Id = 1,
             Name = "Example Room 1",
-            Latitude = 51.4423907f,
-            Longitude = 5.4669287f,
+            TopLeftBounds = [51.4423907f, 5.4669287f],
             VisualizationData = "#FFA500"
         };
 
         Room exampleRoom2 = new Room{
             Id = 1,
             Name = "Example Room 2",
-            Latitude = 51.4223907f,
-            Longitude = 5.4569287f,
+            TopLeftBounds = [51.4223907f, 5.4569287f],
             VisualizationData = "#FFA500"
         };
 
@@ -51,9 +49,8 @@ public class MapController
         rooms.Add(exampleRoom2);
 
         Map map = new Map{ 
-            Latitude = 51.4508647f, 
-            Longitude = 5.4509124f, 
-            SvgMap = "https://simplemaps.com/static/demos/resources/svg-library/svgs/world.svg",
+            TopLeftBounds = [51.4508647f, 5.4509124f],
+            MapUrl = "https://file.io/6voBJ5Q3w3cQ",
             Rooms = rooms
         };
 
