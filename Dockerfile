@@ -11,6 +11,8 @@ COPY . .
 WORKDIR "/src/OpenRemoteAPI"
 
 RUN dotnet restore
+
+RUN dir
 RUN dotnet build "OpenRemoteAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
