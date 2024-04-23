@@ -8,7 +8,8 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["OpenRemoteAPI.csproj", "OpenRemoteAPI/"]
 RUN dir
-RUN dotnet restore "OpenRemoteAPI"
+RUN dir OpenRemoteAPI
+RUN dotnet restore OpenRemoteAPI
 COPY . .
 WORKDIR "/src/OpenRemoteAPI"
 RUN dotnet build "OpenRemoteAPI.csproj" -c Release -o /app/build
