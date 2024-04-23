@@ -7,51 +7,39 @@ namespace OpenRemoteAPI.Controllers;
 [ApiController]
 public class SensorController
 {
-    private readonly IConfiguration _configuration;
+	private readonly IConfiguration _configuration;
 
-    public SensorController(IConfiguration configuration){
-        _configuration = configuration;
-    }
+	[HttpGet]
+	[Route("/Sensor")]
+	public List<Sensor> GetSensors()
+	{
+		return [];
+	}
 
-    [HttpGet]
-    [Route("/Sensor")]
-    public Map GetSensors()
-    {
-        Map map = new();
+	[HttpGet]
+	[Route("/Sensor/Test")]
+	public List<Sensor> GetDummySensors()
+	{
+		var exampleSensor1 = new Sensor
+		{
+			Id = 1,
+			Name = "Example Sensor 1",
+			RoomId = 1,
+			Value = 0.5324234f,
+			SensorType = SensorType.Noise,
+			Coordinates = Coordinates.FromArray([51.4423907f, 5.4669287f])
+		};
 
+		var exampleSensor2 = new Sensor
+		{
+			Id = 2,
+			Name = "Example Sensor 2",
+			RoomId = 2,
+			Value = 0.2345262f,
+			SensorType = SensorType.People,
+			Coordinates = Coordinates.FromArray([51.4223907f, 5.4669287f])
+		};
 
-
-
-
-        return map;
-    }
-
-    [HttpGet]
-    [Route("/Sensor/Test")]
-    public List<Sensor> GetDummySensors()
-    {
-        Sensor exampleSensor1 = new Sensor{
-            Id = 1,
-            Name = "Example Sensor 1",
-            RoomId = 1,
-            Value = 0.5324234f,
-            SensorData = "Crowdedness",
-            Coordinates = [51.4423907f, 5.4669287f]
-        };
-
-        Sensor exampleSensor2 = new Sensor{
-            Id = 1,
-            Name = "Example Sensor 2",
-            RoomId = 2,
-            Value = 0.2345262f,
-            SensorData = "Loudness",
-            Coordinates = [51.4223907f, 5.4669287f],
-        };
-
-        List<Sensor> sensors = new();
-        sensors.Add(exampleSensor1);
-        sensors.Add(exampleSensor2);
-
-        return sensors;
-    }
+		return [exampleSensor1, exampleSensor2];
+	}
 }
