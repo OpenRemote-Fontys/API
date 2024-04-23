@@ -26,10 +26,10 @@ public class MapController(IConfiguration configuration)
 					Name = "Room 1",
 					LocationArrays =
 					[
-						Coordinates.FromArray([51.45098336666666f, 5.4530463552083335f]),
-						Coordinates.FromArray([51.45100683518518f, 5.4530463552083335f]),
-						Coordinates.FromArray([51.45100683518518f, 5.453057201562499f]),
-						Coordinates.FromArray([51.45098336666666f, 5.453057201562499f])
+						new Coordinates { Longitude = 51.45098336666666f, Latitude = 5.4530463552083335f },
+						new Coordinates { Longitude = 51.45100683518518f, Latitude = 5.4530463552083335f },
+						new Coordinates { Longitude = 51.45100683518518f, Latitude = 5.453057201562499f },
+						new Coordinates { Longitude = 51.45098336666666f, Latitude = 5.453057201562499f }
 					],
 					Color = "#5F5F5F"
 				},
@@ -39,10 +39,10 @@ public class MapController(IConfiguration configuration)
 					Name = "Room 2",
 					LocationArrays =
 					[
-						Coordinates.FromArray([51.451041420370366f, 5.453043318229167f]),
-						Coordinates.FromArray([51.45113652962963f, 5.453043318229167f]),
-						Coordinates.FromArray([51.45113652962963f, 5.453057635416666f]),
-						Coordinates.FromArray([51.451042655555554f, 5.453057635416666f])
+						new Coordinates { Longitude = 51.451041420370366f, Latitude = 5.453043318229167f },
+						new Coordinates { Longitude = 51.45113652962963f, Latitude = 5.453043318229167f },
+						new Coordinates { Longitude = 51.45113652962963f, Latitude = 5.453057635416666f },
+						new Coordinates { Longitude = 51.451042655555554f, Latitude = 5.453057635416666f }
 					],
 					Color = "#2F2F2F"
 				}
