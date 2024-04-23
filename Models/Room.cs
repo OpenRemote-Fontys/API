@@ -24,4 +24,4 @@ public class Room
 	///     Color of the room
 	/// </summary>
 	public string Color { get; internal set; } = "#FFFFFF";
-}	
+}
