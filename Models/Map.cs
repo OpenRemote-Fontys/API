@@ -1,9 +1,27 @@
 namespace OpenRemoteAPI.Models;
 
+/// <summary>
+///     Data model containing all map data
+/// </summary>
 public class Map
 {
-    public string MapUrl { get; set; } = "";
-    public float[]? TopLeftBounds { get; set; }
-    public float[]? TopRightBounds { get; set; }
-    public List<Room>? Rooms { get; set; }
+	/// <summary>
+	///     URL of the map image to display (preferably SVG)
+	/// </summary>
+	public string MapUrl { get; internal set; } = "";
+
+	/// <summary>
+	///     Coordinates of the top left pixel of the image
+	/// </summary>
+	public Coordinates TopLeftBounds { get; internal set; } = new();
+
+	/// <summary>
+	///     Coordinates of the bottom right pixel of the image
+	/// </summary>
+	public Coordinates BottomRightBounds { get; internal set; } = new();
+
+	/// <summary>
+	///     List of all rooms on the map
+	/// </summary>
+	public List<Room> Rooms { get; internal set; } = [];
 }
