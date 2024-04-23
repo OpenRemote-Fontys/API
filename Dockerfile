@@ -7,7 +7,9 @@ EXPOSE 5200
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["OpenRemoteAPI.csproj", "OpenRemoteAPI/"]
-COPY . .
+COPY . OpenRemoteAPI/
+RUN dir
+RUN dir OpenRemoteAPI
 WORKDIR "/src/OpenRemoteAPI"
 
 RUN dotnet restore
