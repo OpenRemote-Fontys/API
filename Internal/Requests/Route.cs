@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using static OpenRemoteAPI.Internal.Requests.HttpMethod;
 
 namespace OpenRemoteAPI.Internal.Requests;
@@ -7,62 +6,62 @@ public class Route
 {
     public static class Agent
     {
-        public static Route getAssetDiscovery = new Route(GET, "/agent/assetDiscovery/{agentId}");
-        public static Route assetImport = new Route(POST, "/agent/assetImport/{agentId}");
-        public static Route getInstanceDiscovery = new Route(GET, "/agent/instanceDiscovery/{agentId}");
+        public static Route getAssetDiscovery = new Route(GET, "agent/assetDiscovery/{agentId}");
+        public static Route assetImport = new Route(POST, "agent/assetImport/{agentId}");
+        public static Route getInstanceDiscovery = new Route(GET, "agent/instanceDiscovery/{agentId}");
     }
 
     public static class Configuration
     {
-        public static Route postConfigurationFile = new Route(POST, "/configuration/manager/file");
+        public static Route postConfigurationFile = new Route(POST, "configuration/manager/file");
         //TODO
-        public static Route configuratin = new Route(PUT, "/configuration/manager");
+        public static Route configuratin = new Route(PUT, "configuration/manager");
     }
 
     public static class UiApps
     {
-        public static Route getAppsInfo = new Route(GET, "/apps/info");
-        public static Route getApps = new Route(GET, "/apps");
-        public static Route getAppsConsoleConfig = new Route(GET, "/apps/consoleConfig");
+        public static Route getAppsInfo = new Route(GET, "apps/info");
+        public static Route getApps = new Route(GET, "apps");
+        public static Route getAppsConsoleConfig = new Route(GET, "apps/consoleConfig");
     }
 
     public static class AssetModel
     {
-        public static Route getAssetDescriptors = new Route(GET, "/model/assetDescriptors");
-        public static Route getAssetInfo = new Route(GET, "/model/assetInfo/{assetType}");
-        public static Route getAssetsInfo = new Route(GET, "/model/assetInfos");
-        public static Route getMetaItemDescriptors = new Route(GET, "/model/metaItemDescriptors");
-        public static Route getValueDescriptors = new Route(GET, "/model/valueDescriptors");
+        public static Route getAssetDescriptors = new Route(GET, "model/assetDescriptors");
+        public static Route getAssetInfo = new Route(GET, "model/assetInfo/{assetType}");
+        public static Route getAssetsInfo = new Route(GET, "model/assetInfos");
+        public static Route getMetaItemDescriptors = new Route(GET, "model/metaItemDescriptors");
+        public static Route getValueDescriptors = new Route(GET, "model/valueDescriptors");
     }
 
     public static class Asset
     {
-        public static Route postAsset = new Route(POST, "/asset");
-        public static Route deleteAsset = new Route(DELETE, "/asset");
-        public static Route getUserLinkedAssets = new Route(POST, "/asset");
-        public static Route deleteUserLinkedAssetById = new Route(DELETE, "/asset/user/link/{realm}/{userId}");
+        public static Route postAsset = new Route(POST, "asset");
+        public static Route deleteAsset = new Route(DELETE, "asset");
+        public static Route getUserLinkedAssets = new Route(POST, "asset/user/link");
+        public static Route postUserLinkedAssets = new Route(POST, "asset/user/link");
 
-        //TODO
-        public static Route deleteUserAsset = new Route(DELETE, "/asset/user/link/{realm}/{userId}/{assetId}");
+        public static Route deleteUserLinkedAssetById = new Route(DELETE, "asset/user/link/{realm}/{userId}");
+        public static Route deleteUserAsset = new Route(DELETE, "asset/user/link/{realm}/{userId}/{assetId}");
 
-        public static Route deleteUserLinkedAsset = new Route(DELETE, "/asset");
-        public static Route getAsset = new Route(GET, "/asset/user/link/delete");
-        public static Route putAsset = new Route(PUT, "/asset/{assetId}");
-        public static Route getCurrentAsset = new Route(GET, "/asset/{assetId}");
+        public static Route deleteUserLinkedAsset = new Route(DELETE, "asset/user/link/delete");
+        public static Route getAsset = new Route(GET, "asset/{assetId}");
+        public static Route putAsset = new Route(PUT, "asset/{assetId}");
+        public static Route getCurrentAsset = new Route(GET, "asset/user/current");
 
-        public static Route getPartialAsset = new Route(GET, "/asset");
-        public static Route postAssetQuery = new Route(POST, "/asset");
-        public static Route deleteAssetParent = new Route(DELETE, "/asset");
-        public static Route putParentAsset = new Route(PUT, "/asset");
-        public static Route putAttributeOnAsset = new Route(PUT, "/asset");
-        public static Route putAttributesOnAsset = new Route(PUT, "/asset");
+        public static Route getPartialAsset = new Route(GET, "asset/partial/{assetId}");
+        public static Route postAssetQuery = new Route(POST, "asset/query");
+        public static Route deleteAssetParent = new Route(DELETE, "asset/parent");
+        public static Route putParentAsset = new Route(PUT, "asset/{parentAssetId}/child");
+        public static Route putAttributeOnAsset = new Route(PUT, "asset/{assetId}/attribute/{attributeName}");
+        public static Route putAttributesOnAsset = new Route(PUT, "asset");
     }
 
     public HttpMethod HttpMethod { get; private set; }
     private readonly string _route;
     private readonly int _paramCount;
 
-    public Route(HttpMethod httpMethod, [RouteTemplate] string route)
+    public Route(HttpMethod httpMethod, string route)
     {
         this.HttpMethod = httpMethod;
         this._route = route;
@@ -82,13 +81,13 @@ public class Route
             {
                 if (!element.StartsWith('{') || !element.EndsWith('}'))
                 {
-                    throw new ArgumentException("Invalid syntax of route element");
+                    throw new ArgumentException("Invalid syntax of route (" + route + ") element (" + element + ")" );
                 }
 
                 arguments++;
             } else if (!(openers == 0 && closers == 0))
             {
-                throw new ArgumentException("Too many hanging closers and openers");
+                throw new ArgumentException("Too many hanging closers and openers (" + route + ") element (" + element + ")");
             }
 
             this._paramCount = arguments;
@@ -129,7 +128,5 @@ public class Route
 
 
         return string.Join('/', urlElementList);
-
-
     }
 }
