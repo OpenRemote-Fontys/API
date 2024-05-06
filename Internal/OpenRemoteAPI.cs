@@ -27,6 +27,16 @@ internal class OpenRemoteApi
         return JsonConvert.DeserializeObject<Config>(json) ?? throw new InvalidOperationException("Missing config");
     }
 
+    public void QueryAssets(AssetQuery query)
+    {
+        string url = postAssetQuery.ToUrl();
+
+        string json = JsonConvert.SerializeObject(query);
+        // new HttpContent
+
+        MakeHttpCall(postAssetQuery.ToUrl(), HttpMethod.PUT);
+    }
+
     public Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod)
     {
         return MakeHttpCall(routeUrl, httpMethod, null);
