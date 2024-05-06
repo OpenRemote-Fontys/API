@@ -1,10 +1,27 @@
 namespace OpenRemoteAPI.Models;
 
+/// <summary>
+///     Data model containing all data on a room
+/// </summary>
 public class Room
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = "";
-    public float Longitude { get; set; }
-    public float Latitude { get; set; }
-    public string VisualizationData { get; set; } = "";
+	/// <summary>
+	///     A unique ID for the room
+	/// </summary>
+	public int Id { get; internal set; }
+
+	/// <summary>
+	///     The name of the room
+	/// </summary>
+	public string Name { get; internal set; } = "";
+
+	/// <summary>
+	///     List of coordinates of all corners of the room
+	/// </summary>
+	public List<Coordinates> LocationArrays { get; internal set; } = [];
+
+	/// <summary>
+	///     Color of the room
+	/// </summary>
+	public string Color { get; internal set; } = "#FFFFFF";
 }

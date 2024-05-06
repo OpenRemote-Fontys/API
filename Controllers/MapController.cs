@@ -5,58 +5,48 @@ namespace OpenRemoteAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MapController
+public class MapController(IConfiguration configuration)
 {
-    private readonly IConfiguration _configuration;
+	private readonly IConfiguration _configuration = configuration;
 
-    public MapController(IConfiguration configuration){
-        _configuration = configuration;
-    }
-
-    [HttpGet]
-    [Route("/Map")]
-    public Map GetMap()
-    {
-        Map map = new();
-
-
-
-
-
-        return map;
-    }
-
-    [HttpGet]
-    [Route("/Map/Test")]
-    public Map GetDummyMap()
-    {
-        Room exampleRoom1 = new Room{
-            Id = 1,
-            Name = "Example Room 1",
-            Latitude = 51.4423907f,
-            Longitude = 5.4669287f,
-            VisualizationData = "#FFA500"
-        };
-
-        Room exampleRoom2 = new Room{
-            Id = 1,
-            Name = "Example Room 2",
-            Latitude = 51.4223907f,
-            Longitude = 5.4569287f,
-            VisualizationData = "#FFA500"
-        };
-
-        List<Room> rooms = new();
-        rooms.Add(exampleRoom1);
-        rooms.Add(exampleRoom2);
-
-        Map map = new Map{ 
-            Latitude = 51.4508647f, 
-            Longitude = 5.4509124f, 
-            SvgMap = "https://simplemaps.com/static/demos/resources/svg-library/svgs/world.svg",
-            Rooms = rooms
-        };
-
-        return map;
-    }
+	[HttpGet]
+	[Route("/Map")]
+	public Map GetMap()
+	{
+		return new Map
+		{
+			MapUrl = "https://autumn.revolt.chat/attachments/RfqzEfntQZNjAT2uVc-AGm27kkYvZF_7WBtRQx11FH/TQ.svg",
+			TopLeftBounds = Coordinates.FromArray([51.450472f, 5.452806f]),
+			BottomRightBounds = Coordinates.FromArray([51.451806f, 5.453639f]),
+			Rooms =
+			[
+				new Room
+				{
+					Id = 1,
+					Name = "Room 1",
+					LocationArrays =
+					[
+						Coordinates.FromArray([51.45098336666666f, 5.4530463552083335f]),
+						Coordinates.FromArray([51.45100683518518f, 5.4530463552083335f]),
+						Coordinates.FromArray([51.45100683518518f, 5.453057201562499f]),
+						Coordinates.FromArray([51.45098336666666f, 5.453057201562499f])
+					],
+					Color = "#5F5F5F"
+				},
+				new Room
+				{
+					Id = 2,
+					Name = "Room 2",
+					LocationArrays =
+					[
+						Coordinates.FromArray([51.451041420370366f, 5.453043318229167f]),
+						Coordinates.FromArray([51.45113652962963f, 5.453043318229167f]),
+						Coordinates.FromArray([51.45113652962963f, 5.453057635416666f]),
+						Coordinates.FromArray([51.451042655555554f, 5.453057635416666f])
+					],
+					Color = "#2F2F2F"
+				}
+			]
+		};
+	}
 }
