@@ -22,6 +22,7 @@ internal class OpenRemoteApi
     internal OpenRemoteApi()
     {
         _config = LoadConfig();
+        _httpClient.BaseAddress = new Uri(_config.BaseUrl);
     }
 
     internal static Config LoadConfig()
@@ -31,23 +32,29 @@ internal class OpenRemoteApi
         return JsonConvert.DeserializeObject<Config>(json) ?? throw new InvalidOperationException("Missing config");
     }
 
-    public void QueryAssets(AssetQuery query)
+    public async Task<List<Asset>> QueryAssets(AssetQuery query)
     {
-        string url = postAssetQuery.ToUrl();
+        string json = JsonConvert.SerializeObject(query, settings);
+        HttpContent httpContent = new StringContent(json, MediaTypeHeaderValue.Parse("application/json"));
 
-        string json = JsonConvert.SerializeObject(query);
-        // new HttpContent
 
-        MakeHttpCall(postAssetQuery.ToUrl(), HttpMethod.PUT);
+        HttpResponseMessage response = await MakeHttpCall(postAssetQuery.ToUrl(), postAssetQuery.HttpMethod, httpContent);
+
+        string readAsStringAsync = await response.Content.ReadAsStringAsync();
+        Console.WriteLine("Return JSON: " + readAsStringAsync);
+        List<Asset> assets = JsonConvert.DeserializeObject<List<Asset>>(readAsStringAsync) ?? [];
+        return assets;
     }
 
-    public Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod)
+    public async Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod)
     {
-        return MakeHttpCall(routeUrl, httpMethod, null);
+        return await MakeHttpCall(routeUrl, httpMethod, null);
     }
 
-    internal Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod, HttpContent httpContent)
+    internal async Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod, HttpContent httpContent)
     {
+        Console.WriteLine("Calling `" + routeUrl + "` with " + httpMethod);
+
         string url = _config.BaseUrl + routeUrl;
 
         Task<HttpResponseMessage> httpCallResponse = httpMethod switch
@@ -57,8 +64,9 @@ internal class OpenRemoteApi
             HttpMethod.POST => _httpClient.PostAsync(url, httpContent),
             HttpMethod.PUT => _httpClient.PutAsync(url, httpContent),
             HttpMethod.PATCH => _httpClient.PatchAsync(url, httpContent),
+            _ => throw new ArgumentOutOfRangeException(nameof(httpMethod), httpMethod, null)
         };
 
-        return httpCallResponse;
+        return await httpCallResponse;
     }
 }
