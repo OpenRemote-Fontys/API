@@ -14,6 +14,10 @@ internal class OpenRemoteApi
     private readonly HttpClient _httpClient = new();
     private readonly Config _config;
 
+    private readonly JsonSerializerSettings settings = new()
+    {
+        NullValueHandling = NullValueHandling.Ignore
+    };
 
     internal OpenRemoteApi()
     {

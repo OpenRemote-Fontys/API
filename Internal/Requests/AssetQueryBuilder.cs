@@ -3,19 +3,19 @@
 public class AssetQueryBuilder
 {
     public bool Recursive { get; private set; }
-    public AssetQuery.AccessLevels Access { get; private set; }
+    public AssetQuery.AccessLevels? Access { get; private set; }
 
     public string RealmName { get; private set; }
 
     public List<AssetQuery.Name> Names { get; private set; }
 
-    public HashSet<string> UserIds { get; private set; } = [];
-    public HashSet<string> Types { get; private set; } = [];
+    public HashSet<string> UserIds { get; private set; }
+    public HashSet<string> Types { get; private set; }
 
-    public AssetQuery.Properties OrderByProperty { get; private set; }
+    public AssetQuery.Properties? OrderByProperty { get; private set; }
     public bool OrderByDescending { get; private set; }
 
-    public int Limit { get; private set; }
+    public Int32 Limit { get; private set; }
 
 
 
@@ -33,6 +33,8 @@ public class AssetQueryBuilder
 
     public AssetQueryBuilder AddName(params AssetQuery.Name[] names)
     {
+        this.Names ??= [];
+
         this.Names.AddRange(names);
         return this;
     }
@@ -45,12 +47,16 @@ public class AssetQueryBuilder
 
     public AssetQueryBuilder AddUser(params string[] userIds)
     {
+        this.UserIds ??= [];
+
         this.UserIds.UnionWith(userIds);
         return this;
     }
 
     public AssetQueryBuilder AddTypes(params string[] types)
     {
+        this.Types ??= [];
+
         this.Types.UnionWith(types);
         return this;
     }
@@ -62,7 +68,7 @@ public class AssetQueryBuilder
         return this;
     }
 
-    public AssetQueryBuilder SetLimit(int limit)
+    public AssetQueryBuilder SetLimit(Int32 limit)
     {
         this.Limit = limit;
         return this;
@@ -78,7 +84,7 @@ public class AssetQueryBuilder
             Names,
             UserIds,
             Types,
-            new AssetQuery.OrderBy(OrderByProperty, OrderByDescending),
+            OrderByProperty == null ? null : new AssetQuery.OrderBy(OrderByProperty.Value, OrderByDescending),
             Limit);
     }
 }
