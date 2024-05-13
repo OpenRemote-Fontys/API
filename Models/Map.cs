@@ -24,4 +24,9 @@ public class Map
 	///     List of all rooms on the map
 	/// </summary>
 	public List<Room> Rooms { get; internal set; } = [];
+
+	/// <summary>
+	/// Center of the map displayed to the frontend
+	/// </summary>
+	public Coordinates Center { get; internal set; } = new();
 }
