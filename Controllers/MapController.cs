@@ -18,18 +18,19 @@ public class MapController(IConfiguration configuration)
 			MapUrl = "https://autumn.revolt.chat/attachments/RfqzEfntQZNjAT2uVc-AGm27kkYvZF_7WBtRQx11FH/TQ.svg",
 			TopLeftBounds = Coordinates.FromArray([51.450472f, 5.452806f]),
 			BottomRightBounds = Coordinates.FromArray([51.451806f, 5.453639f]),
+			Center = Coordinates.FromArray([51.451139f, 5.4532225f]),
 			Rooms =
 			[
 				new Room
 				{
 					Id = 1,
 					Name = "Room 1",
-					LocationArrays =
+					RoomBounds =
 					[
-						Coordinates.FromArray([51.45098336666666f, 5.4530463552083335f]),
-						Coordinates.FromArray([51.45100683518518f, 5.4530463552083335f]),
-						Coordinates.FromArray([51.45100683518518f, 5.453057201562499f]),
-						Coordinates.FromArray([51.45098336666666f, 5.453057201562499f])
+						new Coordinates { Longitude = 51.451194f, Latitude = 5.452639f },
+						new Coordinates { Longitude = 51.450806f, Latitude = 5.452500f },
+						new Coordinates { Longitude = 51.450667f, Latitude = 5.453722f },
+						new Coordinates { Longitude = 51.451056f, Latitude = 5.453833f }
 					],
 					Color = "#5F5F5F"
 				},
@@ -37,12 +38,12 @@ public class MapController(IConfiguration configuration)
 				{
 					Id = 2,
 					Name = "Room 2",
-					LocationArrays =
+					RoomBounds =
 					[
-						Coordinates.FromArray([51.451041420370366f, 5.453043318229167f]),
-						Coordinates.FromArray([51.45113652962963f, 5.453043318229167f]),
-						Coordinates.FromArray([51.45113652962963f, 5.453057635416666f]),
-						Coordinates.FromArray([51.451042655555554f, 5.453057635416666f])
+						new Coordinates { Longitude = 51.450611f, Latitude = 5.452417f },
+						new Coordinates { Longitude = 51.450194f, Latitude = 5.452306f },
+						new Coordinates { Longitude = 51.450056f, Latitude = 5.453500f },
+						new Coordinates { Longitude = 51.450444f, Latitude = 5.453639f }
 					],
 					Color = "#2F2F2F"
 				}

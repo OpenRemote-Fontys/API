@@ -20,26 +20,29 @@ public class SensorController
 	[Route("/Sensor/Test")]
 	public List<Sensor> GetDummySensors()
 	{
-		var exampleSensor1 = new Sensor
-		{
-			Id = 1,
-			Name = "Example Sensor 1",
-			RoomId = 1,
-			Value = 0.5324234f,
-			SensorType = SensorType.Noise,
-			Coordinates = Coordinates.FromArray([51.4423907f, 5.4669287f])
-		};
+		var rand = new Random();
 
-		var exampleSensor2 = new Sensor
-		{
+		return
+		[
+			new Sensor
+			{
+				Id = 1,
+				Name = "Example Sensor 1",
+				RoomId = 1,
+				Value = (float)Math.Round(rand.NextSingle(), 2),
+				SensorType = SensorType.Noise,
+				Coordinates = Coordinates.FromArray([51.450917f, 5.453000f])
+			},
+
+			new Sensor
+			{
 			Id = 2,
 			Name = "Example Sensor 2",
 			RoomId = 2,
-			Value = 0.2345262f,
+			Value = (float)Math.Round(rand.NextSingle(), 2),
 			SensorType = SensorType.People,
-			Coordinates = Coordinates.FromArray([51.4223907f, 5.4669287f])
-		};
-
-		return [exampleSensor1, exampleSensor2];
+			Coordinates = Coordinates.FromArray([51.450361f, 5.453139f])
+			}
+		];
 	}
 }
