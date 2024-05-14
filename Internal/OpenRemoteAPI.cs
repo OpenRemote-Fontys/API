@@ -1,8 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using OpenRemoteAPI.Internal.Models;
 using OpenRemoteAPI.Internal.Requests;
-using Route = OpenRemoteAPI.Internal.Requests.Route;
 using static OpenRemoteAPI.Internal.Requests.Route.Asset;
 using HttpMethod = OpenRemoteAPI.Internal.Requests.HttpMethod;
 
@@ -44,6 +43,16 @@ internal class OpenRemoteApi
         Console.WriteLine("Return JSON: " + readAsStringAsync);
         List<Asset> assets = JsonConvert.DeserializeObject<List<Asset>>(readAsStringAsync) ?? [];
         return assets;
+    }
+
+    public async Task<Asset?> QueryAsset(string assetId)
+    {
+        HttpResponseMessage response = await MakeHttpCall(getAsset.ToUrl(assetId), getAsset.HttpMethod);
+
+        string readAsStringAsync = await response.Content.ReadAsStringAsync();
+        Console.WriteLine("Return JSON: " + readAsStringAsync);
+        Asset? asset = JsonConvert.DeserializeObject<Asset>(readAsStringAsync);
+        return asset;
     }
 
     public async Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod)
