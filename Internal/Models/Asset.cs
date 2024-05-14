@@ -44,5 +44,5 @@ public class Asset
     public string[] Path { get; private set; }
 
     [JsonProperty("attributes")]
-    public List<Attribute> Attributes { get; private set; }
+    public Dictionary<string, Attribute> dictionary { get; private set; } = new();
 }

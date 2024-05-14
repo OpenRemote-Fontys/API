@@ -36,6 +36,7 @@ public class AssetQuery(
         [JsonProperty("caseSensitive")] public readonly bool CaseSensitive = caseSensitive;
         [JsonProperty("value")] public readonly string Value = value;
         [JsonProperty("negate")] public readonly bool Negate = negate;
+        [JsonProperty("predicateType")] public readonly string PredicateType = "string";
     }
 
     public class OrderBy(Properties orderByProperty, bool orderByDescending)
