@@ -31,18 +31,16 @@ internal class OpenRemoteApi
         return JsonConvert.DeserializeObject<Config>(json) ?? throw new InvalidOperationException("Missing config");
     }
 
+
     public async Task<List<Asset>> QueryAssets(AssetQuery query)
     {
         string json = JsonConvert.SerializeObject(query, settings);
         HttpContent httpContent = new StringContent(json, MediaTypeHeaderValue.Parse("application/json"));
 
-
         HttpResponseMessage response = await MakeHttpCall(postAssetQuery.ToUrl(), postAssetQuery.HttpMethod, httpContent);
 
         string readAsStringAsync = await response.Content.ReadAsStringAsync();
-        Console.WriteLine("Return JSON: " + readAsStringAsync);
-        List<Asset> assets = JsonConvert.DeserializeObject<List<Asset>>(readAsStringAsync) ?? [];
-        return assets;
+        return JsonConvert.DeserializeObject<List<Asset>>(readAsStringAsync) ?? [];
     }
 
     public async Task<Asset?> QueryAsset(string assetId)
@@ -50,9 +48,7 @@ internal class OpenRemoteApi
         HttpResponseMessage response = await MakeHttpCall(getAsset.ToUrl(assetId), getAsset.HttpMethod);
 
         string readAsStringAsync = await response.Content.ReadAsStringAsync();
-        Console.WriteLine("Return JSON: " + readAsStringAsync);
-        Asset? asset = JsonConvert.DeserializeObject<Asset>(readAsStringAsync);
-        return asset;
+        return JsonConvert.DeserializeObject<Asset>(readAsStringAsync);
     }
 
     public async Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod)
@@ -62,7 +58,6 @@ internal class OpenRemoteApi
 
     internal async Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod, HttpContent httpContent)
     {
-        Console.WriteLine("Calling `" + routeUrl + "` with " + httpMethod);
 
         string url = _config.BaseUrl + routeUrl;
 
