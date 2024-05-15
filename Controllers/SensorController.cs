@@ -4,6 +4,7 @@ using OpenRemoteAPI.Internal;
 using OpenRemoteAPI.Internal.Models;
 using OpenRemoteAPI.Internal.Requests;
 using OpenRemoteAPI.Models;
+using CoordinatesInfo = OpenRemoteAPI.Models.CoordinatesInfo;
 
 namespace OpenRemoteAPI.Controllers;
 
@@ -12,6 +13,9 @@ namespace OpenRemoteAPI.Controllers;
 public class SensorController
 {
 	private readonly IConfiguration _configuration;
+
+	//TODO Fix value, so it's not random
+	private readonly Random random = new();
 
 	private readonly OpenRemoteApi openRemoteApi = new OpenRemoteApi();
 
@@ -31,20 +35,17 @@ public class SensorController
 		var sensors = queryAssets.Select(asset =>
 		{
 
-			// Extracting the coordinates array
-
 			var coordinatesInfo = ((JObject)asset.Attributes["location"].Value).ToObject<CoordinatesInfo>();
 
-
-			//TODO Fix value
+			//TODO Fix value, so it's not random
 			return new Sensor
 			{
 				Id = asset.Id,
 				Name = asset.Name,
 				RoomId = 1,
-				Value = 0.5f,
+				Value = (float)Math.Round(random.NextSingle(), 2),
 				SensorType = SensorType.Noise,
-				Coordinates = Coordinates.FromArray(coordinatesInfo.Coordinates)
+				Location = coordinatesInfo.ToArray()
 			};
 		}).ToList();
 

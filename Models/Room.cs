@@ -18,7 +18,7 @@ public class Room
     /// <summary>
     ///     List of coordinates of all corners of the room
     /// </summary>
-    public List<Coordinates> RoomBounds { get; internal set; } = [];
+    public List<CoordinatesInfo> RoomBounds { get; internal set; } = [];
 
 	/// <summary>
 	///     Color of the room

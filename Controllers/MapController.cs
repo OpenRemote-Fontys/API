@@ -34,25 +34,25 @@ public class MapController(IConfiguration configuration)
 			switch (asset.Type)
 			{
 				case "BuildingAsset":
-					var bounds = ((JArray)asset.dictionary["bounds"].Value).ToObject<float[][]>(); // JArray to float[][]
+					var bounds = ((JArray)asset.Attributes["bounds"].Value).ToObject<float[][]>(); // JArray to float[][]
 
 					map = new Map()
 					{
-						TopLeftBounds = Coordinates.FromArray(bounds[0]),
-						BottomRightBounds = Coordinates.FromArray(bounds[1]),
+						TopLeftBounds = CoordinatesInfo.FromArray(bounds[0]),
+						BottomRightBounds = CoordinatesInfo.FromArray(bounds[1]),
 						Rooms = []
 					};
 					break;
 
 				case "RoomAsset":
-					var roomBounds = ((JArray)asset.dictionary["roomBounds"].Value).ToObject<List<float[]>>(); // JArrau to List<float[]>
+					var roomBounds = ((JArray)asset.Attributes["roomBounds"].Value).ToObject<List<float[]>>(); // JArrau to List<float[]>
 
 					rooms.Add(new Room()
 					{
 						Id = asset.Id,
 						Name = asset.Name,
-						RoomBounds = roomBounds.Select(Coordinates.FromArray).ToList(),
-						Color = asset.dictionary["color"].Value
+						RoomBounds = roomBounds.Select(CoordinatesInfo.FromArray).ToList(),
+						Color = asset.Attributes["color"].Value
 					});
 					break;
 
