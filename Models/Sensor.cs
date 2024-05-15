@@ -35,5 +35,5 @@ public class Sensor
 	/// <summary>
 	///		The location of the sensor
 	/// </summary>
-	public float[] Location { get; internal set; }
+	public float[] Coordinates { get; internal set; }
 }

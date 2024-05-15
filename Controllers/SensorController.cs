@@ -45,7 +45,7 @@ public class SensorController
 				RoomId = 1,
 				Value = (float)Math.Round(random.NextSingle(), 2),
 				SensorType = SensorType.Noise,
-				Location = coordinatesInfo.ToArray()
+				Coordinates = coordinatesInfo.ToArray()
 			};
 		}).ToList();
 
