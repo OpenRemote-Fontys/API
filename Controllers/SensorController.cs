@@ -35,7 +35,19 @@ public class SensorController
 		var sensors = queryAssets.Select(asset =>
 		{
 
+			var SensorData1 = ((JObject)asset.Attributes["JSONReadings1"].Value).ToObject<Dictionary<string, float>>();
+			var SensorData2 = ((JObject)asset.Attributes["JSONReadings2"].Value).ToObject<Dictionary<string, float>>();
+
+			// Combining the dictionaries using Concat and ToDictionary
+			var SensorData = SensorData1.Concat(SensorData2)
+				.GroupBy(kvp => kvp.Key)
+				.ToDictionary(group => group.Key, group => group.Sum(kvp => kvp.Value));
+
+			// make calculations based on the sensor data so it becomes float between 0 and 1 that reflects the loudness
+
 			var coordinatesInfo = ((JObject)asset.Attributes["location"].Value).ToObject<CoordinatesInfo>();
+
+
 
 			//TODO Fix value, so it's not random
 			return new Sensor
