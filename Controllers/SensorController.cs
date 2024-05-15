@@ -36,7 +36,7 @@ public class SensorController
 			var coordinatesInfo = ((JObject)asset.Attributes["location"].Value).ToObject<CoordinatesInfo>();
 
 
-			//TODO Fix vallue
+			//TODO Fix value
 			return new Sensor
 			{
 				Id = asset.Id,
