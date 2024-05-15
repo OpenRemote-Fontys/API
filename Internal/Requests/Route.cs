@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using static OpenRemoteAPI.Internal.Requests.HttpMethod;
 
 namespace OpenRemoteAPI.Internal.Requests;
@@ -62,7 +61,7 @@ public class Route
     private readonly string _route;
     private readonly int _paramCount;
 
-    public Route(HttpMethod httpMethod, [RouteTemplate] string route)
+    public Route(HttpMethod httpMethod, string route)
     {
         this.HttpMethod = httpMethod;
         this._route = route;

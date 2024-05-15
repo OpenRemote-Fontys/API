@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using OpenRemoteAPI.Internal.Models;
 using OpenRemoteAPI.Internal.Requests;
 using Route = OpenRemoteAPI.Internal.Requests.Route;
