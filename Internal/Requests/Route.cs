@@ -14,7 +14,6 @@ public class Route
     public static class Configuration
     {
         public static Route postConfigurationFile = new Route(POST, "configuration/manager/file");
-        //TODO
         public static Route configuratin = new Route(PUT, "configuration/manager");
     }
 
