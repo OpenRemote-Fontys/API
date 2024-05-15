@@ -8,7 +8,7 @@ public class Room
     /// <summary>
     ///     A unique ID for the room
     /// </summary>
-    public int Id { get; internal set; }
+    public string Id { get; internal set; } = "";
 
     /// <summary>
     ///     The name of the room
@@ -20,8 +20,8 @@ public class Room
     /// </summary>
     public List<Coordinates> RoomBounds { get; internal set; } = [];
 
-    /// <summary>
-    ///     Color of the room
-    /// </summary>
-    public string Color { get; internal set; } = "#FFFFFF";
+	/// <summary>
+	///     Color of the room
+	/// </summary>
+	public string Color { get; internal set; } = "#FFFFFF";
 }
