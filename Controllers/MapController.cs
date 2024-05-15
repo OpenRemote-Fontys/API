@@ -38,8 +38,8 @@ public class MapController(IConfiguration configuration)
 
 					map = new Map()
 					{
-						TopLeftBounds = CoordinatesInfo.FromArray(bounds[0]),
-						BottomRightBounds = CoordinatesInfo.FromArray(bounds[1]),
+						TopLeftBounds = bounds[0],
+						BottomRightBounds = bounds[1],
 						Rooms = []
 					};
 					break;
@@ -51,7 +51,7 @@ public class MapController(IConfiguration configuration)
 					{
 						Id = asset.Id,
 						Name = asset.Name,
-						RoomBounds = roomBounds.Select(CoordinatesInfo.FromArray).ToList(),
+						RoomBounds = roomBounds,
 						Color = asset.Attributes["color"].Value
 					});
 					break;
