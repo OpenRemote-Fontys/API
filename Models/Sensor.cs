@@ -1,3 +1,5 @@
+using OpenRemoteAPI.Internal.Models;
+
 namespace OpenRemoteAPI.Models;
 
 /// <summary>
@@ -6,32 +8,32 @@ namespace OpenRemoteAPI.Models;
 public class Sensor
 {
 	/// <summary>
-	///     A unique ID for the sensor
+	///		A unique ID for the sensor
 	/// </summary>
-	public int Id { get; internal set; }
+	public string Id { get; internal set; }
 
 	/// <summary>
-	///     The name of the sensor
+	///		The name of the sensor
 	/// </summary>
 	public string Name { get; internal set; } = "";
 
 	/// <summary>
-	///     The ID of the room the sensor is located in
+	///		The ID of the room the sensor is located in
 	/// </summary>
 	public int RoomId { get; internal set; }
 
 	/// <summary>
-	///     The current value of the sensor between 0 and 1
+	///		The current value of the sensor between 0 and 1
 	/// </summary>
 	public float Value { get; internal set; }
 
 	/// <summary>
-	///     The type of data the sensor returns
+	///		The type of data the sensor returns
 	/// </summary>
 	public SensorType SensorType { get; internal set; }
 
 	/// <summary>
-	///     The location of the sensor
+	///		The location of the sensor
 	/// </summary>
-	public Coordinates Coordinates { get; internal set; } = new();
+	public float[] Coordinates { get; internal set; }
 }

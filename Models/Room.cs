@@ -5,20 +5,21 @@ namespace OpenRemoteAPI.Models;
 /// </summary>
 public class Room
 {
-	/// <summary>
-	///     A unique ID for the room
-	/// </summary>
-	public int Id { get; internal set; }
 
-	/// <summary>
-	///     The name of the room
-	/// </summary>
-	public string Name { get; internal set; } = "";
+    /// <summary>
+    ///     A unique ID for the room
+    /// </summary>
+    public string Id { get; internal set; } = "";
 
-	/// <summary>
-	///     List of coordinates of all corners of the room
-	/// </summary>
-	public List<Coordinates> LocationArrays { get; internal set; } = [];
+    /// <summary>
+    ///     The name of the room
+    /// </summary>
+    public string Name { get; internal set; } = "";
+
+    /// <summary>
+    ///     List of coordinates of all corners of the room
+    /// </summary>
+    public List<float[]> RoomBounds { get; internal set; } = [];
 
 	/// <summary>
 	///     Color of the room
