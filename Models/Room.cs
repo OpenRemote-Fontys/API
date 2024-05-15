@@ -5,6 +5,7 @@ namespace OpenRemoteAPI.Models;
 /// </summary>
 public class Room
 {
+
     /// <summary>
     ///     A unique ID for the room
     /// </summary>
