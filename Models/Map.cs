@@ -6,11 +6,6 @@ namespace OpenRemoteAPI.Models;
 public class Map
 {
 	/// <summary>
-	///     URL of the map image to display (preferably SVG)
-	/// </summary>
-	public string MapUrl { get; internal set; } = "";
-
-	/// <summary>
 	///     Coordinates of the top left pixel of the image
 	/// </summary>
 	public Coordinates TopLeftBounds { get; internal set; } = new();
