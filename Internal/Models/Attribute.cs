@@ -5,23 +5,23 @@ namespace OpenRemoteAPI.Internal.Models;
 public class Attribute
 {
     [JsonProperty("name")]
-    private string Name;
+    public string Name;
 
     [JsonProperty("type")]
-    private string Type;
+    public string Type;
 
     [JsonProperty("meta")]
-    private Meta Meta;
+    public Meta Meta;
 
     [JsonProperty("value")]
-    private dynamic Value;
+    public dynamic Value;
 
     // TODO
     // [JsonProperty("timestamp")]
-    // private DateTime Timestamp;
+    // public DateTime Timestamp;
 }
 
-internal class Meta
+public class Meta
 {
     // TODO
 }
