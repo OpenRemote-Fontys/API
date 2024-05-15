@@ -1,3 +1,5 @@
+using OpenRemoteAPI.Internal.Models;
+
 namespace OpenRemoteAPI.Models;
 
 /// <summary>
@@ -33,5 +35,5 @@ public class Sensor
 	/// <summary>
 	///		The location of the sensor
 	/// </summary>
-	public Coordinates Coordinates { get; internal set; } = new();
+	public float[] Coordinates { get; internal set; }
 }
