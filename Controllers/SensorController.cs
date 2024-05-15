@@ -1,5 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using OpenRemoteAPI.BusinessLogic;
+using OpenRemoteAPI.Internal;
+using OpenRemoteAPI.Internal.Requests;
 using OpenRemoteAPI.Models;
+using CoordinatesInfo = OpenRemoteAPI.Models.CoordinatesInfo;
 
 namespace OpenRemoteAPI.Controllers;
 
@@ -9,40 +14,48 @@ public class SensorController
 {
 	private readonly IConfiguration _configuration;
 
+	private readonly OpenRemoteApi openRemoteApi = new OpenRemoteApi();
+
+
 	[HttpGet]
 	[Route("/Sensor")]
-	public List<Sensor> GetSensors()
+	public async Task<List<Sensor>> GetSensors()
 	{
-		return [];
-	}
+		AssetQuery query = new AssetQueryBuilder()
+			.SetLimit(0)
+			.IsRecursive(true)
+			.AddName(new AssetQuery.Name(AssetQuery.NameMatch.CONTAINS, false, "esp32", false))
+			.Build();
 
-	[HttpGet]
-	[Route("/Sensor/Test")]
-	public List<Sensor> GetDummySensors()
-	{
-		var rand = new Random();
+		var queryAssets = await openRemoteApi.QueryAssets(query);
 
-		return
-		[
-			new Sensor
+		var sensors = queryAssets.Select(asset =>
+		{
+
+			var SensorData1 = ((JObject)asset.Attributes["JSONReadings1"].Value).ToObject<Dictionary<string, int>>();
+			var SensorData2 = ((JObject)asset.Attributes["JSONReadings2"].Value).ToObject<Dictionary<string, int>>();
+
+			// Combining the dictionaries using Concat and ToDictionary
+			var SensorData = SensorData1.Concat(SensorData2)
+				.GroupBy(kvp => kvp.Key)
+				.ToDictionary(group => group.Key, group => group.Sum(kvp => kvp.Value));
+
+			float loudness = ProcessingFrequencySpread.CalculateLoudness(SensorData);
+
+			var coordinatesInfo = ((JObject)asset.Attributes["location"].Value).ToObject<CoordinatesInfo>();
+
+
+			return new Sensor
 			{
-				Id = 1,
-				Name = "Example Sensor 1",
+				Id = asset.Id,
+				Name = asset.Name,
 				RoomId = 1,
-				Value = (float)Math.Round(rand.NextSingle(), 2),
+				Value = loudness,
 				SensorType = SensorType.Noise,
-				Coordinates = Coordinates.FromArray([51.450917f, 5.453000f])
-			},
+				Coordinates = coordinatesInfo.ToArray()
+			};
+		}).ToList();
 
-			new Sensor
-			{
-			Id = 2,
-			Name = "Example Sensor 2",
-			RoomId = 2,
-			Value = (float)Math.Round(rand.NextSingle(), 2),
-			SensorType = SensorType.People,
-			Coordinates = Coordinates.FromArray([51.450361f, 5.453139f])
-			}
-		];
+		return sensors;
 	}
 }
