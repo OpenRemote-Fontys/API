@@ -1,4 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OpenRemoteAPI.Internal;
+using OpenRemoteAPI.Internal.Requests;
 using OpenRemoteAPI.Models;
 
 namespace OpenRemoteAPI.Controllers;
@@ -11,42 +15,55 @@ public class MapController(IConfiguration configuration)
 
 	[HttpGet]
 	[Route("/Map")]
-	public Map GetMap()
+	public async Task<Map> GetMap()
 	{
-		return new Map
+		var openRemote = new OpenRemoteApi();
+
+		var assetQuery = new AssetQueryBuilder()
+			.AddUser("7HoUNjdgA7JYVVgFnYU7ps")
+			.IsRecursive(true)
+			.Build();
+
+		var mapAsset = await openRemote.QueryAssets(assetQuery);
+
+		var map = new Map();
+		var rooms = new List<Room>();
+
+		mapAsset.ForEach((asset) =>
 		{
-			MapUrl = "https://autumn.revolt.chat/attachments/RfqzEfntQZNjAT2uVc-AGm27kkYvZF_7WBtRQx11FH/TQ.svg",
-			TopLeftBounds = Coordinates.FromArray([51.450472f, 5.452806f]),
-			BottomRightBounds = Coordinates.FromArray([51.451806f, 5.453639f]),
-			Rooms =
-			[
-				new Room
-				{
-					Id = 1,
-					Name = "Room 1",
-					LocationArrays =
-					[
-						Coordinates.FromArray([51.45098336666666f, 5.4530463552083335f]),
-						Coordinates.FromArray([51.45100683518518f, 5.4530463552083335f]),
-						Coordinates.FromArray([51.45100683518518f, 5.453057201562499f]),
-						Coordinates.FromArray([51.45098336666666f, 5.453057201562499f])
-					],
-					Color = "#5F5F5F"
-				},
-				new Room
-				{
-					Id = 2,
-					Name = "Room 2",
-					LocationArrays =
-					[
-						Coordinates.FromArray([51.451041420370366f, 5.453043318229167f]),
-						Coordinates.FromArray([51.45113652962963f, 5.453043318229167f]),
-						Coordinates.FromArray([51.45113652962963f, 5.453057635416666f]),
-						Coordinates.FromArray([51.451042655555554f, 5.453057635416666f])
-					],
-					Color = "#2F2F2F"
-				}
-			]
-		};
+			switch (asset.Type)
+			{
+				case "BuildingAsset":
+					var bounds = ((JArray)asset.Attributes["bounds"].Value).ToObject<float[][]>(); // JArray to float[][]
+
+					map = new Map()
+					{
+						TopLeftBounds = bounds[0],
+						BottomRightBounds = bounds[1],
+						Rooms = []
+					};
+					break;
+
+				case "RoomAsset":
+					var roomBounds = ((JArray)asset.Attributes["roomBounds"].Value).ToObject<List<float[]>>(); // JArrau to List<float[]>
+
+					rooms.Add(new Room()
+					{
+						Id = asset.Id,
+						Name = asset.Name,
+						RoomBounds = roomBounds,
+						Color = asset.Attributes["color"].Value
+					});
+					break;
+
+				default:
+					Console.WriteLine($"Received unexpected assetType: {asset.Type}");
+					break;
+			}
+		});
+
+		map.Rooms = rooms;
+
+		return map;
 	}
 }

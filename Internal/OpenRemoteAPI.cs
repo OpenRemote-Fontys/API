@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System.Net.Http.Headers;
+using Newtonsoft.Json;
 using OpenRemoteAPI.Internal.Models;
 using OpenRemoteAPI.Internal.Requests;
-using Route = OpenRemoteAPI.Internal.Requests.Route;
 using static OpenRemoteAPI.Internal.Requests.Route.Asset;
 using HttpMethod = OpenRemoteAPI.Internal.Requests.HttpMethod;
 
@@ -13,10 +13,16 @@ internal class OpenRemoteApi
     private readonly HttpClient _httpClient = new();
     private readonly Config _config;
 
+    private readonly JsonSerializerSettings settings = new()
+    {
+        NullValueHandling = NullValueHandling.Ignore
+    };
+
 
     internal OpenRemoteApi()
     {
         _config = LoadConfig();
+        _httpClient.BaseAddress = new Uri(_config.BaseUrl);
     }
 
     internal static Config LoadConfig()
@@ -26,22 +32,31 @@ internal class OpenRemoteApi
         return JsonConvert.DeserializeObject<Config>(json) ?? throw new InvalidOperationException("Missing config");
     }
 
-    public void QueryAssets(AssetQuery query)
+    public async Task<List<Asset>> QueryAssets(AssetQuery query)
     {
-        string url = postAssetQuery.ToUrl();
+        string json = JsonConvert.SerializeObject(query, settings);
+        HttpContent httpContent = new StringContent(json, MediaTypeHeaderValue.Parse("application/json"));
 
-        string json = JsonConvert.SerializeObject(query);
-        // new HttpContent
+        HttpResponseMessage response = await MakeHttpCall(postAssetQuery.ToUrl(), postAssetQuery.HttpMethod, httpContent);
 
-        MakeHttpCall(postAssetQuery.ToUrl(), HttpMethod.PUT);
+        string readAsStringAsync = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<List<Asset>>(readAsStringAsync) ?? [];
     }
 
-    public Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod)
+    public async Task<Asset?> QueryAsset(string assetId)
     {
-        return MakeHttpCall(routeUrl, httpMethod, null);
+        HttpResponseMessage response = await MakeHttpCall(getAsset.ToUrl(assetId), getAsset.HttpMethod);
+
+        string readAsStringAsync = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<Asset>(readAsStringAsync);
     }
 
-    internal Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod, HttpContent httpContent)
+    public async Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod)
+    {
+        return await MakeHttpCall(routeUrl, httpMethod, null);
+    }
+
+    internal async Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod, HttpContent httpContent)
     {
         string url = _config.BaseUrl + routeUrl;
 
@@ -52,8 +67,9 @@ internal class OpenRemoteApi
             HttpMethod.POST => _httpClient.PostAsync(url, httpContent),
             HttpMethod.PUT => _httpClient.PutAsync(url, httpContent),
             HttpMethod.PATCH => _httpClient.PatchAsync(url, httpContent),
+            _ => throw new ArgumentOutOfRangeException(nameof(httpMethod), httpMethod, null)
         };
 
-        return httpCallResponse;
+        return await httpCallResponse;
     }
 }
