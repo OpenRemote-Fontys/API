@@ -18,6 +18,7 @@ internal class OpenRemoteApi
         NullValueHandling = NullValueHandling.Ignore
     };
 
+
     internal OpenRemoteApi()
     {
         _config = LoadConfig();
@@ -30,7 +31,6 @@ internal class OpenRemoteApi
         string json = r.ReadToEnd();
         return JsonConvert.DeserializeObject<Config>(json) ?? throw new InvalidOperationException("Missing config");
     }
-
 
     public async Task<List<Asset>> QueryAssets(AssetQuery query)
     {
@@ -58,7 +58,6 @@ internal class OpenRemoteApi
 
     internal async Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod, HttpContent httpContent)
     {
-
         string url = _config.BaseUrl + routeUrl;
 
         Task<HttpResponseMessage> httpCallResponse = httpMethod switch

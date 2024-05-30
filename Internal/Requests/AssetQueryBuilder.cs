@@ -34,7 +34,6 @@ public class AssetQueryBuilder
     public AssetQueryBuilder AddName(params AssetQuery.Name[] names)
     {
         this.Names ??= [];
-
         this.Names.AddRange(names);
         return this;
     }
@@ -48,7 +47,6 @@ public class AssetQueryBuilder
     public AssetQueryBuilder AddUser(params string[] userIds)
     {
         this.UserIds ??= [];
-
         this.UserIds.UnionWith(userIds);
         return this;
     }
@@ -56,7 +54,6 @@ public class AssetQueryBuilder
     public AssetQueryBuilder AddTypes(params string[] types)
     {
         this.Types ??= [];
-
         this.Types.UnionWith(types);
         return this;
     }
