@@ -56,6 +56,14 @@ public class Route
         public static Route PutAttributesOnAsset = new Route(PUT, "asset");
     }
 
+    public static class AssetDatapoint
+    {
+        public static Route ExportDatapoint = new Route(GET, "asset/datapoint/export");
+        public static Route PeriodsDatapoint = new Route(GET, "asset/datapoint/periods");
+        public static Route GetDatapoints = new Route(POST, "asset/datapoint/{assetId}/{attributeName}");
+    }
+
+
     public HttpMethod HttpMethod { get; private set; }
     private readonly string _route;
     private readonly int _paramCount;
