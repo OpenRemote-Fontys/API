@@ -1,8 +1,11 @@
 ﻿using System.Net.Http.Headers;
+using System.Text;
 using Newtonsoft.Json;
 using OpenRemoteAPI.Internal.Models;
 using OpenRemoteAPI.Internal.Requests;
+using OpenRemoteAPI.Models;
 using static OpenRemoteAPI.Internal.Requests.Route.Asset;
+using static OpenRemoteAPI.Internal.Requests.Route.AssetDatapoint;
 using HttpMethod = OpenRemoteAPI.Internal.Requests.HttpMethod;
 
 namespace OpenRemoteAPI.Internal;
@@ -37,15 +40,55 @@ internal class OpenRemoteApi
         string json = JsonConvert.SerializeObject(query, settings);
         HttpContent httpContent = new StringContent(json, MediaTypeHeaderValue.Parse("application/json"));
 
-        HttpResponseMessage response = await MakeHttpCall(postAssetQuery.ToUrl(), postAssetQuery.HttpMethod, httpContent);
+        HttpResponseMessage response = await MakeHttpCall(PostAssetQuery.ToUrl(), PostAssetQuery.HttpMethod, httpContent);
 
-        string readAsStringAsync = await response.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<List<Asset>>(readAsStringAsync) ?? [];
+        string responseString = await response.Content.ReadAsStringAsync();
+
+
+
+
+
+        List<Asset> assets = JsonConvert.DeserializeObject<List<Asset>>(responseString) ?? [];
+
+
+        assets.Select(asset => {
+
+            Dictionary<string, object> jsonObject = new() { { "fromTime", (DateTime.Now - TimeSpan.FromMinutes(10)).ToString("yyyy-MM-ddTHH:mm:ss.fffff") }, { "toTime", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffff") }, { "type", "string" } };
+            string json = JsonConvert.SerializeObject(jsonObject);
+            HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await MakeHttpCall(GetDatapoints.ToUrl(asset.Id, "JSONReadings1"), GetDatapoints.HttpMethod, content);
+            string responseString = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<List<DataPoint>>(responseString) ?? [];;
+
+            var attributeData = asset.Attributes.Select(async pair =>
+            {
+                string attributeName = pair.Key;
+
+
+                Dictionary<string, object> jsonObject = new() { { "fromTime", (DateTime.Now - TimeSpan.FromMinutes(10)).ToString("yyyy-MM-ddTHH:mm:ss.fffff") }, { "toTime", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffff") }, { "type", "string" } };
+                string json = JsonConvert.SerializeObject(jsonObject);
+                HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await MakeHttpCall(GetDatapoints.ToUrl(asset.Id, attributeName), GetDatapoints.HttpMethod, content);
+                string responseString = await response.Content.ReadAsStringAsync();
+
+                return JsonConvert.DeserializeObject<List<DataPoint>>(responseString) ?? [];;
+
+
+            }).ToList();
+
+            return asset.Attributes.Select();
+        });
+
+        string assetId = "3ixRNBYVh8ouCsTF9cLkI5";
+        string attributeName = "JSONreadings1";
     }
 
     public async Task<Asset?> QueryAsset(string assetId)
     {
-        HttpResponseMessage response = await MakeHttpCall(getAsset.ToUrl(assetId), getAsset.HttpMethod);
+        HttpResponseMessage response = await MakeHttpCall(GetAsset.ToUrl(assetId), GetAsset.HttpMethod);
 
         string readAsStringAsync = await response.Content.ReadAsStringAsync();
         return JsonConvert.DeserializeObject<Asset>(readAsStringAsync);
