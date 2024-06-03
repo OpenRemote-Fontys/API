@@ -79,13 +79,6 @@ namespace OpenRemoteAPI.Controllers
             });
         }
 
-
-        /* Helper classes */
-        public class DataPoint()
-        {
-            [JsonProperty("y")] public Dictionary<string, int> frequencies { get; private set; }
-        }
-
         /* Helper Methods */
         private bool IsFree(List<DataPoint> datapoints) 
         {
