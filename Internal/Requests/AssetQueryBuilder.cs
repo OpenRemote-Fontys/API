@@ -11,9 +11,11 @@ public class AssetQueryBuilder
     public List<Name> Names { get; private set; }
 
     public HashSet<string> UserIds { get; private set; }
+  
     public HashSet<string> Types { get; private set; }
 
     public Properties? OrderByProperty { get; private set; }
+
     public bool OrderByDescending { get; private set; }
 
     public Int32 Limit { get; private set; }
@@ -79,7 +81,6 @@ public class AssetQueryBuilder
         this.Attribute = new(value, name);
         return this;
     }
-
 
     public AssetQuery Build()
     {

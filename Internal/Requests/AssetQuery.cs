@@ -19,7 +19,7 @@ public class AssetQuery(
     [JsonProperty("recursive")] public readonly bool Recursive = recursive;
 
     [JsonProperty("access")] public readonly AssetQuery.AccessLevels? Access = access;
-
+  
     [JsonProperty("realm")] public readonly RealmName _RealmName = new(realmName);
 
     [JsonProperty("names")] public readonly List<Name> Names = names;
@@ -43,6 +43,7 @@ public class AssetQuery(
         [JsonProperty("negate")] public readonly bool Negate = negate;
         [JsonProperty("predicateType")] public readonly string PredicateType = "string";
     }
+
 
     public class RealmName(string name)
     {

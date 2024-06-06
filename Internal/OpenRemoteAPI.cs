@@ -18,7 +18,6 @@ internal class OpenRemoteApi
         NullValueHandling = NullValueHandling.Ignore
     };
 
-
     internal OpenRemoteApi()
     {
         _config = LoadConfig();
