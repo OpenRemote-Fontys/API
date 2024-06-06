@@ -31,7 +31,6 @@ internal class OpenRemoteApi
         return JsonConvert.DeserializeObject<Config>(json) ?? throw new InvalidOperationException("Missing config");
     }
 
-
     public async Task<List<Asset>> QueryAssets(AssetQuery query)
     {
         string json = JsonConvert.SerializeObject(query, settings);
@@ -58,7 +57,6 @@ internal class OpenRemoteApi
 
     internal async Task<HttpResponseMessage> MakeHttpCall(string routeUrl, HttpMethod httpMethod, HttpContent httpContent)
     {
-
         string url = _config.BaseUrl + routeUrl;
 
         Task<HttpResponseMessage> httpCallResponse = httpMethod switch
