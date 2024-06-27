@@ -25,7 +25,7 @@ public class SensorController
 			.SetRealmName("master")
 			.SetLimit(0)
 			.IsRecursive(true)
-			.AddName(new AssetQuery.Name(AssetQuery.NameMatch.CONTAINS, false, "esp32", false))
+			.AddName(new AssetQuery.Name(AssetQuery.NameMatch.CONTAINS, false, "unit", false))
 			.Build();
 
 		var queryAssets = await openRemoteApi.QueryAssets(query);
