@@ -22,6 +22,7 @@ public class SensorController
 	public async Task<List<Sensor>> GetSensors()
 	{
 		AssetQuery query = new AssetQueryBuilder()
+			.SetRealmName("master")
 			.SetLimit(0)
 			.IsRecursive(true)
 			.AddName(new AssetQuery.Name(AssetQuery.NameMatch.CONTAINS, false, "esp32", false))

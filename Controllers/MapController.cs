@@ -20,6 +20,7 @@ public class MapController(IConfiguration configuration)
 		var openRemote = new OpenRemoteApi();
 
 		var assetQuery = new AssetQueryBuilder()
+			.SetRealmName("master")
 			.AddUser("7HoUNjdgA7JYVVgFnYU7ps")
 			.IsRecursive(true)
 			.Build();
