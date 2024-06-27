@@ -59,7 +59,8 @@ namespace OpenRemoteAPI.BusinessLogic
         //Converts scales values into a loudness reading
         private static float ConvertToLoudness(int[] values)
         {
-            return values.Sum() / 600000.0f;
+            //return values.Sum() / 600000.0f;
+            return (float)(1 / (1 + Math.Exp(-0.000005 * (values.Sum() - 500000))));
         }
     }
 }
